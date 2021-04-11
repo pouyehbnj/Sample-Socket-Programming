@@ -44,25 +44,13 @@ public class ClientThread implements Runnable {
             Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//        System.out.println("Remote IP : "
-//                + connectionSocket.getInetAddress().getHostAddress());
-//        System.out.println("Remote Port : "
-//                + connectionSocket.getPort());
         while (true) {
             try {
-//                System.out.println("Remote IP : "
-//                        + connectionSocket.getInetAddress().getHostAddress());
-//                System.out.println("Remote Port : "
-//                        + connectionSocket.getPort());
+
 
                 String line = reader.readLine();
                 System.out.println("Server received " + line);
-//            if (line.startsWith("name")) {
-//                String[] tokens = line.split(" "); // name  // {name}
-//                String name = tokens[1];
-//                writer.write("Welcome " + name + "\n");
-//                writer.flush();
-//            } 
+
                 if (line.startsWith("chat")) {
                     String[] tokens = line.split(" ");
                     String friend = tokens[1];
