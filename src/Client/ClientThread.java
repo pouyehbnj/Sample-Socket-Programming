@@ -53,7 +53,7 @@ public class ClientThread implements Runnable {
 
                 if (line.startsWith("chat")) {
                     String[] tokens = line.split(" ");
-                    String friend = tokens[1];
+                    String friend = tokens[2];
                     writer.write("Hello Dear " + friend + "\n");
                     writer.flush();
                 } else if (line.startsWith("exit")) {

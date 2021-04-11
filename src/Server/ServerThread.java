@@ -20,18 +20,18 @@ public class ServerThread implements Runnable {
     byte[] buffer = new byte[1024];
     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
     DatagramPacket sendPacket;
-//    String IP;
-//    String port;
+    String IP;
+    String port;
     String[] data;
 
     public ServerThread(DatagramPacket packet, DatagramSocket serverSocket) throws IOException {
         this.serverSocket = serverSocket;
         this.packet = packet;
         data = new String[2];
-//        IP = packet.getAddress().getHostAddress().toString();
-//        data[0] = IP;
-//        port = String.valueOf(packet.getPort());
-//        data[1] = port;
+        IP = packet.getAddress().getHostAddress().toString();
+        data[0] = IP;
+        port = String.valueOf(packet.getPort());
+        data[1] = port;
 
     }
 
@@ -57,14 +57,8 @@ public class ServerThread implements Runnable {
             if (line.startsWith("login")) {
                 String[] tokens = line.split(" ");
                 String name = tokens[1].trim();
-                String IP = tokens[3].trim();
-                String port = tokens[5].trim();
-                data[0] = IP;
-                data[1] = port;
                 users.put(name, data);
                 response = "user added!";
-//                sendPacket = new DatagramPacket(response.getBytes(), response.getBytes().length,
-//                        packet.getAddress(), packet.getPort());
                 for (String i : users.keySet()) {
                     System.out.println("key:" + i + " value: " + Arrays.toString(users.get(i)));
                 }

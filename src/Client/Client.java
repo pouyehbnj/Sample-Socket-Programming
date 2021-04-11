@@ -16,8 +16,7 @@ import java.util.concurrent.Executors;
 
 public class Client {
 
-    static int UDPport;
-    static int TCPport;
+    static int port;
     DatagramSocket clientSocket;
 
     public Client(int portNumber) throws SocketException {
@@ -28,18 +27,12 @@ public class Client {
         
         ServerSocket serverSocket = new ServerSocket(port);
         ExecutorService pool;
-        //serverSocket = new ServerSocket(port);
-        //System.out.println("Server Socket is initialized");
         pool = Executors.newCachedThreadPool();
-        //while (true) {
+      
             System.out.println("TCP Server Socket starts listening");
-            //Socket connectionSocket = null;// = serverSocket.accept();
-           // System.out.println("Server Socket find a new connection");
-            //TCP (IP SRC, IP DST, PORT SRC, PORT DST)
             ClientThread clientrThread = new ClientThread(serverSocket);
             pool.execute(clientrThread);
-          //   System.out.println("connection setup done");
-        //}
+         
     }
 
     public void chat(String ip,int port) throws IOException {
@@ -71,9 +64,9 @@ public class Client {
 
         while (true) {
             System.out.println("Please enter your query");
-            System.out.println("For login enter: login $you_name ip: $your_ip port: $your_port");
+            System.out.println("For login enter: login $you_name");
             System.out.println("For search enter: search $searching_name");
-            System.out.println("For search chat: chat $you_name");
+            System.out.println("For search chat: chat I'm $you_name");
             String line = consoleReader.readLine();
             DatagramPacket packet = new DatagramPacket(line.getBytes(), line.getBytes().length,
                     InetAddress.getByName("localhost"), 20000);
@@ -90,7 +83,7 @@ public class Client {
             System.out.println(loginResp);
             if (loginResp.trim().equals("user added!")) {
                // clientSocket.close();
-                setTCPConnection(TCPport);
+                setTCPConnection(port);
                 System.out.println("TCP connection setup done");
             }
             if (loginResp.startsWith("Info")) {
@@ -107,12 +100,12 @@ public class Client {
 
     public static void main(String[] args) {
         Client client = null;
-        System.out.println("Please required  TCP port");
-        TCPport = new Scanner(System.in).nextInt();
-        System.out.println("Please required  UDP port");
-        UDPport = new Scanner(System.in).nextInt();
+//        System.out.println("Please required  TCP port");
+//        TCPport = new Scanner(System.in).nextInt();
+        System.out.println("Please required port");
+        port = new Scanner(System.in).nextInt();
         try {
-            client = new Client(UDPport);
+            client = new Client(port);
             client.run();
         } catch (SocketException e) {
             e.printStackTrace();
